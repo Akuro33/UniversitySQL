@@ -15,12 +15,12 @@ public class WebApplication {
     private static final Logger LOGGER = LogManager.getLogger(WebApplication.class);
 
     public static void main(String[] args) {
+        SpringApplication.run(WebApplication.class, args);
         SessionFactory sessionFactory = HibernateConfigurator.SessionFactoryLoader();
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
 
-        System.out.println("Work");
-        SpringApplication.run(WebApplication.class, args);
+        LOGGER.info("The application is running");
        HibernateConfigurator.SessionFactoryLoaderClose(session, sessionFactory);
         System.out.println("Work2");
     }
