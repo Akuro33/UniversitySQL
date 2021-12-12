@@ -19,8 +19,9 @@ public class WebApplication {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
 
-
+        System.out.println("Work");
         SpringApplication.run(WebApplication.class, args);
-        HibernateConfigurator.SessionFactoryLoaderClose(session, sessionFactory);
+       HibernateConfigurator.SessionFactoryLoaderClose(session, sessionFactory);
+        System.out.println("Work2");
     }
 }
