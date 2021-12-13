@@ -115,28 +115,26 @@ public class ExampleDate {
         Query query2 = session.createQuery(selectAllTeachers);
         List<Teacher> teachers = query2.getResultList();
 
-        List <String> Subjects = new ArrayList<>();
+        List <String> subjects = new ArrayList<>();
 
-        Subjects.add("IT");
-        Subjects.add("Chemistry");
-        Subjects.add("Physics");
+        subjects.add("IT");
+        subjects.add("Chemistry");
+        subjects.add("Physics");
         for (Teacher teacher: teachers){
-            PutInside(students, Subjects, 0, teacher);
-            PutInside(students, Subjects, 1, teacher);
-            PutInside(students, Subjects, 2, teacher);
+            if (teacher.getSubject().equals(subjects.get(0))) PutInside(students, subjects, 0, teacher);
+            if (teacher.getSubject().equals(subjects.get(1))) PutInside(students, subjects, 1, teacher);
+            if (teacher.getSubject().equals(subjects.get(2))) PutInside(students, subjects, 2, teacher);
         }
         teachers.forEach(s -> session.persist(s));
     }
 
     private void PutInside(List<Student> studentList, List<String> subjects, int a, Teacher teacher) {
-        if (teacher.getSubject().equals(subjects.get(a))){
             for (Student student: studentList){
                 if (student.getSubject().equals(subjects.get(a))){
                     teacher.addStudent(student);
-                    student.addTeacher(teacher);
-                }
+              }
             }
-        }
+
 
     }
 

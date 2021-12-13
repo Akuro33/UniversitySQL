@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.school.configurate.HibernateConfigurator;
-import pl.school.dto.StudentDTO;
 import pl.school.entity.Student;
 import pl.school.quarry.HQLQuarry;
 
@@ -43,7 +42,7 @@ public class HibernateController {
         return studentInMemory.findAll(filter, sort, page, size);
     }*/
     @RequestMapping
-    public Collection<StudentDTO> getStudent () {
+    public Collection<Student> getStudent () {
         return hqlQuarry.getAllStudents();
     }
 
@@ -55,13 +54,13 @@ public class HibernateController {
             @RequestParam(name = "lastName", required = false) String lastName,
             @RequestParam(name = "sort", defaultValue = "id") String sort,
             @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "10") Integer size
-
+            @RequestParam(defaultValue = "10") Integer size,
+            @RequestParam(name = "teacher") String teacher
     ) {
 
         LOGGER.info("filter: '{}'; sort: '{}', page: {}, size: {}", filter, sort, page, size);
 
-        return hqlQuarry.cos(firstName, lastName, sort, page, size);
+        return hqlQuarry.cos(firstName, lastName, sort, page, size, teacher);
 
     }
 
