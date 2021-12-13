@@ -2,8 +2,8 @@
 
 
 DataBase = UniversitySQL
-login = spring3
-pass = spring3
+login = skstudent
+pass = skstudent
 port 3306
 
 http://localhost:8080/api/students

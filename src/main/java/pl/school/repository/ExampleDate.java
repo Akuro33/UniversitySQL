@@ -49,7 +49,7 @@ public class ExampleDate {
             Student student1 = new Student();
             student1.setFirstName(student.getFirstName());
             student1.setLastName(student.getLastName());
-            student1.setAge(student.getAge());
+            student1.setAge((int)student.getAge());
             student1.setSubject(student.getSubject());
             student1.setEmail(student.getEmail());
 
@@ -63,7 +63,7 @@ public class ExampleDate {
             Teacher teacher1 = new Teacher();
             teacher1.setFirstName(teacher.getFirstName());
             teacher1.setLastName(teacher.getLastName());
-            teacher1.setAge(teacher.getAge());
+            teacher1.setAge((int)teacher.getAge());
             teacher1.setSubject(teacher.getSubject());
             teacher1.setEmail(teacher.getEmail());
             session.persist(teacher1);
