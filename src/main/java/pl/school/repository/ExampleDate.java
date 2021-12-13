@@ -23,8 +23,6 @@ public class ExampleDate {
         this.session = session;
     }
 
-
-
     public void checkDB () {
         //Tak, wiem iż tak nie powinno się robić
         try {
@@ -46,7 +44,7 @@ public class ExampleDate {
         addTeachersAndStudentsToInsideList();
     }
 
-    public void addStudentsToDB () {
+    private void addStudentsToDB () {
         for (Student student: studentList){
             Student student1 = new Student();
             student1.setFirstName(student.getFirstName());
@@ -59,7 +57,7 @@ public class ExampleDate {
         }
     }
 
-    public void addTeacherToDB () {
+    private void addTeacherToDB () {
 
         for (Teacher teacher: teacherList) {
             Teacher teacher1 = new Teacher();
@@ -72,7 +70,7 @@ public class ExampleDate {
         }
     }
 
-    public List<Student> giveAll (){
+    private List<Student> giveAll (){
         populateStudents();
         return students.values().stream().collect(Collectors.toList());
     }
@@ -108,9 +106,6 @@ public class ExampleDate {
         teacherList.add(new Teacher("Urszula", "Ulik", 30, "Ulik@gmail.com", "Chemistry"));
         return teacherList;
     }
-
-
-
 
     private void addTeachersAndStudentsToInsideList () {
         String selectAllStudents = "SELECT s from Student s";

@@ -4,6 +4,7 @@ package pl.school.quarry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import pl.school.dto.StudentDTO;
 import pl.school.entity.Student;
 
 import javax.persistence.EntityManager;
@@ -21,6 +22,13 @@ public class HQLQuarry {
     @Autowired
     private EntityManager entityManager;
 
+
+    public List<StudentDTO> getAllStudents () {
+        String select = "select s from Student s";
+        Query query = entityManager.createQuery(select);
+        List <StudentDTO> studentDTOS = query.getResultList();
+        return studentDTOS;
+    }
 
     public List<Student> cos (String firstName, String lastName, String sort, Integer page, Integer size) {
         String select = "select s from Student s";
@@ -47,6 +55,7 @@ public class HQLQuarry {
                 .limit(size)
                 .collect(Collectors.toList());
     }
+
     public int compareByField(Student student1, Student student2, String fieldName) {
         switch (fieldName) {
             case "id": return student1.getIdStudent().compareTo(student2.getIdStudent());
@@ -59,7 +68,5 @@ public class HQLQuarry {
         }
     }
 
-    /*
 
-     */
 }

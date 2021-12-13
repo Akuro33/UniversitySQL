@@ -1,5 +1,7 @@
 package pl.school.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +34,7 @@ public class Student {
     @Column(name="subject")
     private String subject;
 
+    @JsonIgnore
     @ManyToMany(fetch=FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "teacher_student", joinColumns = @JoinColumn(name = "id_student"), inverseJoinColumns = @JoinColumn(name = "id_teacher"))
     private List<Teacher> teacherList;
@@ -131,7 +134,6 @@ public class Student {
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 ", subject='" + subject + '\'' +
-                ", teacherList=" + teacherList +
                 '}';
     }
 
