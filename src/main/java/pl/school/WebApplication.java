@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pl.school.configurate.HibernateConfigurator;
+import pl.school.quarry.HQLQuarry;
+import pl.school.repository.ExampleDate;
 
 @SpringBootApplication
 public class WebApplication {
@@ -19,9 +21,13 @@ public class WebApplication {
         SessionFactory sessionFactory = HibernateConfigurator.SessionFactoryLoader();
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
+        HQLQuarry hqlQuarry = new HQLQuarry();
+        ExampleDate exampleDate = new ExampleDate(session);
+        exampleDate.checkDB();
+
 
         LOGGER.info("The application is running");
        HibernateConfigurator.SessionFactoryLoaderClose(session, sessionFactory);
-        System.out.println("Work2");
+
     }
 }

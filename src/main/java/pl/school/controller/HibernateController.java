@@ -1,17 +1,29 @@
 package pl.school.controller;
 
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.school.WebApplication;
 import pl.school.configurate.HibernateConfigurator;
 import pl.school.entity.Student;
 import pl.school.memory.StudentInMemory;
+import pl.school.quarry.HQLQuarry;
 
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping ("/students")
 public class HibernateController {
+
+    @Autowired
+    private HQLQuarry hqlQuarry;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HibernateConfigurator.class);
 
@@ -26,16 +38,41 @@ public class HibernateController {
 //3. Dane można filtrować: wyszukać wszystkich studentów danego nauczyciela i odwrotnie.
 //4. Studentów oraz nauczycieli można wyszukiwać po imieniu i nazwisku.
 
-    @RequestMapping("/test")
-    @ResponseBody
-    public String test () {
-        return "Students";
+
+    @RequestMapping
+    public Collection<Student> getStudents (
+            @RequestParam(defaultValue = "") String filter,
+            @RequestParam(name = "sort", defaultValue = "id") String sort,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size
+    ) {
+        LOGGER.info("filter: '{}'; sort: '{}', page: {}, size: {}", filter, sort, page, size);
+
+        return studentInMemory.findAll(filter, sort, page, size);
     }
+
+    @RequestMapping("/2")
+    public Collection<Student> getStudents2 (
+            @RequestParam(defaultValue = "") String filter,
+            @RequestParam(name = "firstName", required = false) String firstName,
+            @RequestParam(name = "lastName", required = false) String lastName,
+            @RequestParam(name = "sort", defaultValue = "id") String sort,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size
+
+    ) {
+
+        LOGGER.info("filter: '{}'; sort: '{}', page: {}, size: {}", filter, sort, page, size);
+
+        return hqlQuarry.cos(firstName, lastName, sort, page, size);
+
+    }
+
 
 /*    public Collection<Student> getStudents (
             @RequestParam(name = "id", required = false) Integer id,
-            @RequestParam(name = "firstName", required = false) String firstName,
-            @RequestParam(name = "LastName", required = false) String lastName,
+
+
             @RequestParam(name = "age", required = false) Integer age,
             @RequestParam(name = "email", required = false) String email,
             @RequestParam(name = "subject", required = false) String subject,
@@ -51,14 +88,7 @@ public class HibernateController {
         LOGGER.info("Client header: {}", headers.containsKey("Client") ? headers.get("Client") : '-');
         return null;
     }*/
-    public Collection<Student> getStudents (
-            @RequestParam(defaultValue = "") String filter,
-            @RequestParam(name = "sort", defaultValue = "id") String sort,
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "10") Integer size
-    ) {
-        LOGGER.info("filter: '{}'; sort: '{}', page: {}, size: {}", filter, sort, page, size);
-        return studentInMemory.findAll(filter, sort, page, size);
-    }
+
+
 
 }
