@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.school.configurate.HibernateConfigurator;
 import pl.school.entity.Student;
+import pl.school.entity.Teacher;
 import pl.school.quarry.HQLQuarry;
 
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
-@RequestMapping ("/students")
+@RequestMapping ("/api")
 public class HibernateController {
 
     @Autowired
@@ -20,71 +22,34 @@ public class HibernateController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HibernateConfigurator.class);
 
-
-
-
-
-    // 1. Obie klasy można tworzyć, usuwać i edytować. Dane powinny być walidowane: poprawny email, imię dłuższe od dwóch liter, wiek > 18.
-//2. Powinna być możliwość wyświetlenia wszystkich studentów oraz wszystkich nauczycieli (dwa endpointy, możliwość stronicowania i sortowania).
-//3. Dane można filtrować: wyszukać wszystkich studentów danego nauczyciela i odwrotnie.
-//4. Studentów oraz nauczycieli można wyszukiwać po imieniu i nazwisku.
-
-
-/*    @RequestMapping
+    @RequestMapping("/students")
     public Collection<Student> getStudents (
             @RequestParam(defaultValue = "") String filter,
-            @RequestParam(name = "sort", defaultValue = "id") String sort,
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "10") Integer size
-    ) {
-        LOGGER.info("filter: '{}'; sort: '{}', page: {}, size: {}", filter, sort, page, size);
-
-        return studentInMemory.findAll(filter, sort, page, size);
-    }*/
-    @RequestMapping
-    public Collection<Student> getStudent () {
-        return hqlQuarry.getAllStudents();
-    }
-
-
-    @RequestMapping("/2")
-    public Collection<Student> getStudents2 (
-            @RequestParam(defaultValue = "") String filter,
-            @RequestParam(name = "firstName", required = false) String firstName,
-            @RequestParam(name = "lastName", required = false) String lastName,
+            @RequestParam(name = "firstname", required = false) String firstName,
+            @RequestParam(name = "lastname", required = false) String lastName,
             @RequestParam(name = "sort", defaultValue = "id") String sort,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
-            @RequestParam(name = "teacher") String teacher
+            @RequestParam(name = "teacher", required = false) String teacher
     ) {
-
         LOGGER.info("filter: '{}'; sort: '{}', page: {}, size: {}", filter, sort, page, size);
-
-        return hqlQuarry.cos(firstName, lastName, sort, page, size, teacher);
-
+        return hqlQuarry.getStudentsListSortedAndFiltered(firstName, lastName, sort, page, size, teacher);
+    }
+    @RequestMapping("/teachers")
+    public List<Teacher> getTeachers (
+            @RequestParam(defaultValue = "") String filter,
+            @RequestParam(name = "firstname", required = false) String firstName,
+            @RequestParam(name = "lastname", required = false) String lastName,
+            @RequestParam(name = "sort", defaultValue = "id") String sort,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "5") Integer size,
+            @RequestParam(name = "teacher", required = false) String teacher
+    ) {
+        LOGGER.info("filter: '{}'; sort: '{}', page: {}, size: {}", filter, sort, page, size);
+        return hqlQuarry.getTeacherListSortedAndFiltered(firstName, lastName, sort, page, size, teacher);
     }
 
 
-/*    public Collection<Student> getStudents (
-            @RequestParam(name = "id", required = false) Integer id,
-
-
-            @RequestParam(name = "age", required = false) Integer age,
-            @RequestParam(name = "email", required = false) String email,
-            @RequestParam(name = "subject", required = false) String subject,
-            @RequestParam(name = "sort", defaultValue = "id") String sort,
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "10") Integer size
-) {
-        LOGGER.info("filter: '{}'; sort: '{}', page: {}, size: {}", filter, sort, page, size);
-        LOGGER.info("Client header: {}", headers.containsKey("Client") ? headers.get("Client") : '-');
-
-
-        LOGGER.info("id: '{}',   sort: '{}', page: {}, size: {}", id, firstName, lastName, age, email, subject);
-        LOGGER.info("Client header: {}", headers.containsKey("Client") ? headers.get("Client") : '-');
-        return null;
-    }*/
-
-
-
+// @RequestParam(name = "teachers") boolean showTeachers
+// @RequestParam(name = "students") boolean showStudents
 }

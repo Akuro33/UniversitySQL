@@ -3,31 +3,40 @@ package pl.school.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table (name = "teacher")
-public class Teacher {
+public class Teacher extends Human{
 // Nauczyciel powinien mieć pola: imię, nazwisko, wiek, email oraz przedmiot.
     @Id
     @GeneratedValue (strategy=GenerationType.IDENTITY)
     @Column(name="id_teacher")
     private Integer idTeacher;
 
+    @Size(min=2, max= 25, message = "Firt name must have at least 2 characters")
     @Column(name="first_name")
     private String firstName;
 
+    @Size(min=2, max= 25, message = "Last name must have at least 2 characters")
     @Column(name="last_name")
     private String lastName;
 
+    @Min(18)
     @Column(name="age")
-    private int age;
+    private Integer age;
 
+    @Email
     @Column(name="email")
     private String email;
 
+    @NotBlank
     @Column(name="subject")
     private String subject;
 
@@ -80,7 +89,7 @@ public class Teacher {
         this.lastName = lastName;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 

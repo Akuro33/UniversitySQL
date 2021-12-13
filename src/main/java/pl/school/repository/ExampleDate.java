@@ -40,8 +40,8 @@ public class ExampleDate {
         } catch (NoResultException e) {
            this.teacherList = populateTeacher();
             addTeacherToDB();
+           addTeachersAndStudentsToInsideList();
         }
-        addTeachersAndStudentsToInsideList();
     }
 
     private void addStudentsToDB () {
