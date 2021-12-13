@@ -25,10 +25,9 @@ public class WebApplication {
         SessionFactory sessionFactory = HibernateConfigurator.SessionFactoryLoader();
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        HQLQuarry hqlQuarry = new HQLQuarry();
-        ExampleDate exampleDate = new ExampleDate(session);
 
-        exampleDate.checkDB();
+/*        ExampleDate exampleDate = new ExampleDate(session);
+        exampleDate.checkDB();*/
 
 
 
