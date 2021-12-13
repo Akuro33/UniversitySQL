@@ -1,22 +1,15 @@
 package pl.school.controller;
 
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.school.WebApplication;
 import pl.school.configurate.HibernateConfigurator;
 import pl.school.entity.Student;
-import pl.school.memory.StudentInMemory;
 import pl.school.quarry.HQLQuarry;
 
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping ("/students")
@@ -27,11 +20,9 @@ public class HibernateController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HibernateConfigurator.class);
 
-    private final StudentInMemory studentInMemory;
 
-    public HibernateController(StudentInMemory studentInMemory) {
-        this.studentInMemory = studentInMemory;
-    }
+
+
 
     // 1. Obie klasy można tworzyć, usuwać i edytować. Dane powinny być walidowane: poprawny email, imię dłuższe od dwóch liter, wiek > 18.
 //2. Powinna być możliwość wyświetlenia wszystkich studentów oraz wszystkich nauczycieli (dwa endpointy, możliwość stronicowania i sortowania).
@@ -39,7 +30,7 @@ public class HibernateController {
 //4. Studentów oraz nauczycieli można wyszukiwać po imieniu i nazwisku.
 
 
-    @RequestMapping
+/*    @RequestMapping
     public Collection<Student> getStudents (
             @RequestParam(defaultValue = "") String filter,
             @RequestParam(name = "sort", defaultValue = "id") String sort,
@@ -49,9 +40,9 @@ public class HibernateController {
         LOGGER.info("filter: '{}'; sort: '{}', page: {}, size: {}", filter, sort, page, size);
 
         return studentInMemory.findAll(filter, sort, page, size);
-    }
+    }*/
 
-    @RequestMapping("/2")
+    @RequestMapping()
     public Collection<Student> getStudents2 (
             @RequestParam(defaultValue = "") String filter,
             @RequestParam(name = "firstName", required = false) String firstName,

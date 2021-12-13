@@ -5,11 +5,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pl.school.configurate.HibernateConfigurator;
+import pl.school.entity.Student;
 import pl.school.quarry.HQLQuarry;
 import pl.school.repository.ExampleDate;
+
+import java.util.List;
 
 @SpringBootApplication
 public class WebApplication {
@@ -23,7 +27,9 @@ public class WebApplication {
         session.beginTransaction();
         HQLQuarry hqlQuarry = new HQLQuarry();
         ExampleDate exampleDate = new ExampleDate(session);
+
         exampleDate.checkDB();
+
 
 
         LOGGER.info("The application is running");

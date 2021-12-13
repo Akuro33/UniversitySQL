@@ -4,9 +4,7 @@ package pl.school.quarry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 import pl.school.entity.Student;
-import pl.school.memory.StudentInMemory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -14,7 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static pl.school.memory.StudentInMemory.compareByField;
+
 
 @Repository
 @Transactional
@@ -49,7 +47,17 @@ public class HQLQuarry {
                 .limit(size)
                 .collect(Collectors.toList());
     }
-
+    public int compareByField(Student student1, Student student2, String fieldName) {
+        switch (fieldName) {
+            case "id": return student1.getIdStudent().compareTo(student2.getIdStudent());
+            case "firstName" : return student1.getFirstName().compareTo(student2.getFirstName());
+            case "lastName" : return student1.getLastName().compareTo(student2.getLastName());
+            case "age" : return student1.getAge().compareTo(student2.getAge());
+            case "email" : return student1.getEmail().compareTo(student2.getEmail());
+            case "subject" : return student1.getSubject().compareTo(student2.getSubject());
+            default: return 0;
+        }
+    }
 
     /*
 
